@@ -20,10 +20,12 @@ export default NextAuth({
 
       // Access token has expired, try to update it
       const refreshedUser: TokenInfo = await refreshAccessToken(user.refreshToken);
-      Object.assign(token, refreshedUser);
+      Object.assign(user, refreshedUser);
+      Object.assign(token, user);
       return token
     },
-    async session({ session, user }: { session: Session, user: User, token: JWT }) {
+    async session({ session, user, token }: { session: Session | any, user: User, token: any | JWT | TokenInfo }) {
+      user = token.claims
       if (user) {
         session.user = user;
       }
@@ -39,6 +41,10 @@ export default NextAuth({
         ? url
         : baseUrl
     }
+  },
+  jwt: {
+    // encode: async ({ secret, token, maxAge }): Promise<any> => { return token },
+    // decode: async ({ secret, token, maxAge }): Promise<any> => { return token },
   },
   debug: process.env.NODE_ENV !== 'production',
   events: {

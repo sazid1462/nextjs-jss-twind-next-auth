@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 
 import { createUseStyles } from 'react-jss'
+import { toast } from 'react-toastify'
 
 const useStyles = createUseStyles({
   container: {
@@ -38,6 +40,9 @@ const useStyles = createUseStyles({
 
 const Home: NextPage = () => {
   const classes = useStyles();
+  const session = useSession();
+
+  console.log(session);
 
   return (
     <div className={`${classes.container} flex flex-col items-center justify-center min-h-screen py-2`}>
@@ -63,15 +68,8 @@ const Home: NextPage = () => {
         </p>
 
         <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            onClick={() => toast.success("Weldone!")}>Show Success</button>
 
           <a
             href="https://nextjs.org/learn"

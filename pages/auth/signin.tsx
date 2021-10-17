@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { LoginFormData } from "../../libs/dtos/LoginFormData";
+import { RouteNames } from "../../constants/RouteNames";
 
 const schema = yup.object({
   username: yup.string().required("Username is required"),
@@ -19,7 +21,7 @@ export default function SignIn({ csrfToken }: any) {
   const callbackUrl =
     router.query.callbackUrl || process.env.APP_BASE_URL;
 
-  const onSubmit = (values: any) => {
+  const onSubmit = (values: LoginFormData) => {
     signIn('credentials',
       {
         username: values.username,
@@ -53,12 +55,17 @@ export default function SignIn({ csrfToken }: any) {
           <p className="text-red-500 text-xs italic">{errors.password?.message}</p>
         </div>
         <div className="flex items-center justify-between">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
             Sign In
           </button>
-          <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-            Forgot Password?
-          </a>
+          <div className="inline-block align-baseline">
+            <a className="block text-sm text-blue-500 hover:text-blue-800" href="#">
+              Forgot Password?
+            </a>
+            <a className="block text-sm text-blue-500 hover:text-blue-800" href={RouteNames.REGISTER}>
+              Register?
+            </a>
+          </div>
         </div>
       </form>
       <p className="text-center text-gray-500 text-xs">

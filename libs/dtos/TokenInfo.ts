@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 
-export interface TokenInfo_FromAPI {
+export interface TokenInfo_API {
   access_token: string
   refresh_token: string
   token_type: string
@@ -18,7 +18,7 @@ export class TokenInfo {
   expTime: number
   claims: TokenClaims
 
-  constructor(data: TokenInfo_FromAPI) {
+  constructor(data: TokenInfo_API) {
     this.accessToken = data.access_token;
     this.refreshToken = data.refresh_token;
     this.tokenType = data.token_type;

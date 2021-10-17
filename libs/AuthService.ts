@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from "axios";
 import { NextPageContext } from "next";
 import { BaseService, Response } from "./BaseService";
 import { LoginFormData } from "./dtos/LoginFormData";
-import { TokenInfo, TokenInfo_FromAPI } from "./dtos/TokenInfo";
+import { TokenInfo, TokenInfo_API } from "./dtos/TokenInfo";
 
 export class AuthService extends BaseService {
   constructor(ctx?: NextPageContext) {
@@ -14,7 +14,7 @@ export class AuthService extends BaseService {
     params.append('username', data.username);
     params.append('password', data.password);
 
-    const resp: Response<TokenInfo_FromAPI> = await this.post('token/create', {data: params});
+    const resp: Response<TokenInfo_API> = await this.post('token/create', {data: params});
     return new TokenInfo(resp.data);
   }
 
@@ -23,7 +23,7 @@ export class AuthService extends BaseService {
     if (token) {
       config.headers = {RefreshToken: token}
     }
-    const resp: Response<TokenInfo_FromAPI> = await this.post('token/refresh', config);
+    const resp: Response<TokenInfo_API> = await this.post('token/refresh', config);
     return new TokenInfo(resp.data);
   };
 }
